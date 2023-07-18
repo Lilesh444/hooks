@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function Blog(){
 
@@ -7,12 +7,14 @@ export default function Blog(){
     // const [content,setContent] = useState("");
     const [formData, setformData] = useState({title:"", content:""})
     const [blogs, setBlogs] =  useState([]);
+    const titleRef=useRef(null);
 
     function handleSubmit(e){
         e.preventDefault();
 
         setBlogs([{title: formData.title,content:formData.content}, ...blogs]);
         setformData({title:"",content:""})
+        titleRef.current.focus();
         console.log(blogs);
     }
 
@@ -30,6 +32,7 @@ export default function Blog(){
                         <input className="input"
                                 placeholder="Enter the Title of the Blog here.."
                                 value={formData.title}
+                                ref={titleRef}
                                 onChange = {(e) => setformData({title: e.target.value, content:formData.content})}
                         />
                 </Row >
