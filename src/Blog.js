@@ -12,9 +12,17 @@ export default function Blog(){
         titleRef.current.focus();
      },[]);
 
+    //  set title
+    useEffect(()=>{
+        if(blogs.length && blogs[0].title){
+            document.title=blogs[0].title;
+        }else{
+            document.title='no-blogs'
+        }
+    },[blogs])
+
     function handleSubmit(e){
         e.preventDefault();
-
         setBlogs([{title: formData.title,content:formData.content}, ...blogs]);
         setformData({title:"",content:""});
         titleRef.current.focus();
@@ -44,6 +52,7 @@ export default function Blog(){
                         <textarea className="input content"
                                 placeholder="Content of the Blog goes here.."
                                 value={formData.content}
+                                required
                                 onChange = {(e) => setformData({title: formData.title,content: e.target.value})}
                         />
                 </Row >
